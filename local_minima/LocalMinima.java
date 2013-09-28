@@ -1,60 +1,79 @@
 public class LocalMinima {
-    public static int findLocalMinima(int[] input) {
-        if(input == null || input.length <= 0) {
-            return -1;
+    // this makes use of modified binary search algorithm
+    // if value at mid is less than its immediate neighbors, it is the local minimum
+    // 1. move in the left direction if the value at mid is greater than its left neighbor
+    // 2. move in the right direction if the value at mid is greater than its right neighbor
+    // if 1. or 2. conditions are not met with, picking left or right would not matter, I picked left
+    public static int localMinima(int[] inputArray) {
+        if(inputArray == null) {
+            return Integer.MIN_VALUE;
         }
-        if(input.length == 1) {
-            return 0;
+        if(inputArray.length == 0) {
+            return Integer.MIN_VALUE;
         }
 
-        int startIdx = 0;
-        int endIdx = input.length-1;
-        while(startIdx < endIdx) {
-            int midIdx = (startIdx+endIdx)/2;
-            System.out.println("Mid Index [" + midIdx + "] :00");
-            if(midIdx == 0 && input[midIdx] < input[midIdx+1]) {
-                System.out.println("Mid Index [" + midIdx + "] :01");
-                return midIdx;
-            }
-            System.out.println("Mid Index [" + midIdx + "] :02");
-            if(midIdx == input.length-1 && input[midIdx] < input[midIdx-1]) {
-                System.out.println("Mid Index [" + midIdx + "] :03");
-                return midIdx;
-            }
-            System.out.println("Mid Index [" + midIdx + "] :04");
-            if(input[midIdx] < input[midIdx-1] && input[midIdx] < input[midIdx+1]) {
-                System.out.println("Mid Index [" + midIdx + "] :05");
-                return midIdx;
-            }
-            System.out.println("Mid Index [" + midIdx + "] :06");
-            if(input[midIdx] < input[endIdx] && input[midIdx] > input[startIdx]) {
-                System.out.println("Mid Index [" + midIdx + "] :07");
-                startIdx = midIdx + 1;
-            } else if(input[midIdx] > input[endIdx] && input[midIdx] < input[startIdx]) {
-                System.out.println("Mid Index [" + midIdx + "] :08");
-                endIdx = midIdx - 1;
+        // special case: when length of the array is 2
+        if(inputArray.length == 2) {
+            if(inputArray[0] <= inputArray[1]) {
+                return inputArray[0];
             } else {
-                System.out.println("Mid Index [" + midIdx + "] :09");
-                startIdx = midIdx + 1;
+                return inputArray[1];
             }
         }
-        return -1;
+
+        int low = 0;
+        int high = inputArray.length - 1;
+        while(low <= high) {
+            int mid = (high + low)/2;
+            
+            // corner case: when mid is the first element of the array
+            if(mid == 0) {
+                if(low == mid && high == mid) {
+                    return inputArray[mid];
+                }
+                if(inputArray[mid] < inputArray[mid+1]) {
+                    return inputArray[mid];
+                } else {
+                    return Integer.MIN_VALUE;
+                }
+            }
+
+            // corner case: when mid is the last element of the array
+            if(mid == inputArray.length - 1) {
+                if(low == mid && high == mid) {
+                    return inputArray[mid];
+                }
+                if(inputArray[mid] < inputArray[mid-1]) {
+                    return inputArray[mid];
+                } else {
+                    return Integer.MIN_VALUE;
+                }
+            }
+
+            if(inputArray[mid] <= inputArray[mid-1] && inputArray[mid] <= inputArray[mid+1]) {
+                return inputArray[mid];
+            }
+            if(inputArray[mid] > inputArray[mid-1]) {
+                high = mid - 1;
+            } else if(inputArray[mid] > inputArray[mid+1]) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return Integer.MIN_VALUE;
     }
 
     public static void main(String[] args) {
+        //int[] inputArray = {45, 12};
+        int[] inputArray = {16, 16, 16, 34, 32, 45, 12};
         //int[] inputArray = {1, 3, 4, 5, 12, 10, 14, 9};
         //int[] inputArray = {1};
         //int[] inputArray = {1, 2};
-        //TODO: int[] inputArray = {2, 1};
-        int[] inputArray = {10, 5, 1};
+        //int[] inputArray = {2, 1};
+        //int[] inputArray = {10, 5, 1};
         //int[] inputArray = {1, 3, 4};
         //int[] inputArray = {5, 3, 4};
-        int localMinimaIdx = findLocalMinima(inputArray);
-        if(localMinimaIdx == -1) {
-            System.out.println("Local minima does not exist");
-        } else {
-            System.out.println("Local minima [" + inputArray[localMinimaIdx] + "]");
-        }
+        System.out.println("local minima [" + localMinima(inputArray) + "]");
     }
 }
-
