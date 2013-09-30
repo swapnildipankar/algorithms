@@ -20,6 +20,13 @@ public class DigitalSearchTree {
         }
 
         public void insertWord(String inputWord) {
+            if(inputWord == null) {
+                return;
+            }
+            if(inputWord.length() == 0) {
+                return;
+            }
+
             Node currentNode = root;
             for(int idx=0; idx<=inputWord.length(); ++idx) {
                 if(idx == inputWord.length()) {
@@ -36,8 +43,14 @@ public class DigitalSearchTree {
         }
 
         public boolean isValidWord(String inputWord) {
-            Node currentNode = root;
+            if(inputWord == null) {
+                return;
+            }
+            if(inputWord.length() == 0) {
+                return;
+            }
 
+            Node currentNode = root;
             for(int idx=0; idx<inputWord.length(); ++idx) {
                 int integerValueForCharacter = getIntegerValueForCharacter(Character.toLowerCase(inputWord.charAt(idx)));
                 if(currentNode.next[integerValueForCharacter] == null) {
