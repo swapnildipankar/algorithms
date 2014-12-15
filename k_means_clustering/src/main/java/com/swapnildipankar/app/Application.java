@@ -1,5 +1,9 @@
 package com.swapnildipankar.app;
 
+import com.swapnildipankar.datagenerator.DataGenerator;
+import com.swapnildipankar.datagenerator.RandomPointsGenerator;
+import com.swapnildipankar.datagenerator.RealPointsGenerator;
+
 import java.util.Map;
 import java.util.Vector;
 
@@ -15,8 +19,9 @@ public class Application {
         double minY = 0.0;
         double maxY = 100.0;
 
-        RandomPointsGenerator randomPointsGenerator = new RandomPointsGenerator(numberOfPoints, minX, maxX, minY, maxY);
-        Vector<Point> pointVector = randomPointsGenerator.getRandomPoints();
+        DataGenerator dataGenerator = new RandomPointsGenerator(numberOfPoints, minX, maxX, minY, maxY);
+//        DataGenerator dataGenerator = new RealPointsGenerator("src/main/resources/input_data_germany_cities.txt");
+        Vector<Point> pointVector = dataGenerator.getDataPoints();
 //        System.out.println("-----------------------------------");
 //        System.out.println("Random Points");
 //        System.out.println("-----------------------------------");

@@ -1,4 +1,6 @@
-package com.swapnildipankar.app;
+package com.swapnildipankar.datagenerator;
+
+import com.swapnildipankar.app.Point;
 
 import java.util.Random;
 import java.util.Vector;
@@ -6,7 +8,7 @@ import java.util.Vector;
 /**
  * Created by sdipankar on 11/30/14.
  */
-public class RandomPointsGenerator {
+public class RandomPointsGenerator implements DataGenerator {
     private int numberOfPoints;
     private double minX;
     private double maxX;
@@ -24,7 +26,8 @@ public class RandomPointsGenerator {
         pointVector = new Vector<Point>(numberOfPoints);
     }
 
-    public Vector<Point> getRandomPoints() {
+    @Override
+    public Vector<Point> getDataPoints() {
         for(int index = 0; index < numberOfPoints; ++index) {
             Point point = new Point(getRandomValueInRange(minX, maxX), getRandomValueInRange(minY, maxY));
             pointVector.add(point);

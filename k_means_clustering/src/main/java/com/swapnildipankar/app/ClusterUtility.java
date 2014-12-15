@@ -26,13 +26,4 @@ public class ClusterUtility {
         }
         return true;
     }
-
-    public static Vector<Point> initializeCentroidVector(int vectorSize) {
-        Vector<Point> centroidVector = new Vector<Point>(vectorSize);
-        for(int index = 0; index < vectorSize; ++index) {
-            Point point = new Point(0.0, 0.0);
-            centroidVector.add(point);
-        }
-        return centroidVector;
-    }
 }
